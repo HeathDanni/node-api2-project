@@ -93,8 +93,62 @@ router.put("/api/posts/:id", (req, res) => {
             })
     })
 
-    // router.get("/api/posts:postId/comments") {
-    //     posts.getPost
-    // }
+
+    //Help!  I don't know to check if the post with this id exists in this call
+
+    router.get("/api/posts/:id/comments", (req, res) => {
+        posts.findPostComments(req.params.id)
+         .then((comments) => {
+            //  if (!posts.postId) {
+            //      return res.status(404).json({
+            //         message: "The post with the specified ID does not exist."
+            //      })
+            //  }
+             res.status(200).json(comments)
+         })
+         .catch((err) => {
+            console.log(err)
+            res.status(500).json({
+                error: "The comments information could not be retrieved."
+            })
+         })
+    })
+
+    router.get("/api/posts/:postId/comments/:commentId", (req, res) => {
+        //for some reason get request only takes the id of the comment.  However, when it is working fine in insomnia
+        posts.findCommentById(req.params.commentId)
+            .then((comment) => {
+                if (comment) {
+                    res.json(comment)
+                } else {
+                    res.status(400).json({
+                        message: "Comment was not found"
+                    })
+                }
+            })
+            .catch(() => {
+                res.status(500).json({
+                    error: "could not get comment"
+                })
+            })
+    })
+
+    // router.post("/api/posts/:postId/comments", (req, res) => {
+    //     if (!req.body.comment) {
+    //         return res.status(400).json({
+    //             errorMessage: "Please provide text for the comment."
+    //         })
+    //     }
+
+    //     posts.insertComment(req.body.comment)
+    //         .then((comment) => {
+    //             res.status(201).json(comment)
+    //         })
+    //         .catch((err) => {
+    //             res.status(500).json({
+    //                 error: "There was an error while saving the comment to the database"
+    //             })
+    //         })
+    // })
 
 module.exports = router
