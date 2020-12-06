@@ -133,22 +133,22 @@ router.put("/api/posts/:id", (req, res) => {
             })
     })
 
-    // router.post("/api/posts/:postId/comments", (req, res) => {
-    //     if (!req.body.comment) {
-    //         return res.status(400).json({
-    //             errorMessage: "Please provide text for the comment."
-    //         })
-    //     }
-
-    //     posts.insertComment(req.body.comment)
-    //         .then((comment) => {
-    //             res.status(201).json(comment)
-    //         })
-    //         .catch((err) => {
-    //             res.status(500).json({
-    //                 error: "There was an error while saving the comment to the database"
-    //             })
-    //         })
-    // })
+    router.post("/api/posts/:postId/comments", (req, res) => {
+        if (!req.body) {
+            return res.status(400).json({
+                errorMessage: "Please provide text for the comment."
+            })
+        }
+         
+        posts.insertComment({...req.body, post_id: req.params.postId})
+            .then((comment) => {
+                res.status(201).json(comment)
+            })
+            .catch((err) => {
+                res.status(500).json({
+                    error: "There was an error while saving the comment to the database"
+                })
+            })
+    })
 
 module.exports = router
