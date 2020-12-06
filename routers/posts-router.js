@@ -115,10 +115,9 @@ router.put("/api/posts/:id", (req, res) => {
     })
 
     router.get("/api/posts/:postId/comments/:commentId", (req, res) => {
-        //for some reason get request only takes the id of the comment.  However, when it is working fine in insomnia
         posts.findCommentById(req.params.commentId)
             .then((comment) => {
-                if (comment) {
+                if (!comment) {
                     res.json(comment)
                 } else {
                     res.status(400).json({
@@ -139,9 +138,14 @@ router.put("/api/posts/:id", (req, res) => {
                 errorMessage: "Please provide text for the comment."
             })
         }
-         
+         //Help!  I don't know to check if the post with this id exists in this call
         posts.insertComment({...req.body, post_id: req.params.postId})
             .then((comment) => {
+                // if (!??) {
+                //     return res.status(404).json({
+                //         message: "The post with the specified ID does not exist."
+                //     })
+                // }
                 res.status(201).json(comment)
             })
             .catch((err) => {
