@@ -27,7 +27,7 @@ router.get("/api/posts/:id", (req, res) => {
         })
         .catch((err) => {
             res.status(500).json({
-                message: "The post with the specified ID does not exist."
+                error: "The post information could not be retrieved."
             })
         })
 })
@@ -45,7 +45,7 @@ router.post("/api/posts", (req, res) => {
         .catch((err) => {
             console.log(err)
             res.status(500).json({
-                message: "Error creating new post"
+                error: "There was an error while saving the post to the database"
             })
         })
 })
