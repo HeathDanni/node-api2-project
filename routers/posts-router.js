@@ -1,5 +1,5 @@
 const express = require("express")
-const posts = require(`./db.js`)
+const posts = require(`../data/db.js`)
 const router = express.Router()
 
 router.get("/api/posts", (req, res) => {
@@ -92,5 +92,9 @@ router.put("/api/posts/:id", (req, res) => {
                 })
             })
     })
+
+    // router.get("/api/posts:postId/comments") {
+    //     posts.getPost
+    // }
 
 module.exports = router

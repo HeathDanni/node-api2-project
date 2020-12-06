@@ -1,6 +1,6 @@
 const express = require("express")
 const server = express()
-const postsRouter = require("./data/posts-router")
+const postsRouter = require("./routers/posts-router")
 
 server.use(express.json())
 server.use(postsRouter)
